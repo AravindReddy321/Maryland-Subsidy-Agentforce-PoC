@@ -86,5 +86,14 @@ The Proof of Concept can be verified using the following parameters on the https
 
 ## Repository Structure
 * **Apex Logic:** `force-app/main/default/classes/`
-* **AI Metadata:** `force-app/main/default/genAiPlanners/`
+* **AI Metadata:** `force-app/main/default/genAiPlanners/`, `force-app/main/default/genAiPlannerBundles/`
 * **Portal Configuration:** `force-app/main/default/experienceBundles/`
+
+---
+
+ ## Known Constraint & Scalability Roadmap.
+ Currently, the Agent is optimized for Targeted Queries (specific providers/dates). For massive historical data export, the system will be designed to trigger a Data Export rather than a Real-time Chat Summary to respect LLM Token limits and ensure UI responsiveness.
+ 
+ **Example Prompt for Scalability Issue:** 
+ 
+give subsidy payment details of all providers with provider id p-100 to p-200 for months starting from january to decemebr of years 2020,2021,2022,2023,2024,2025,2026
