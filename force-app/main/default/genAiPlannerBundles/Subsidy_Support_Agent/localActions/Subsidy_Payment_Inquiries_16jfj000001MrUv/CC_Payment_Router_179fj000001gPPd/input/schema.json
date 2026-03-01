@@ -1,0 +1,18 @@
+{
+  "required" : [ "payReqList" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "payReqList" : {
+      "title" : "List of Payment Requests",
+      "description" : "Pass all identified payment requests here at once.",
+      "maxItems" : 2000,
+      "items" : {
+        "lightning:type" : "@apexClassType/c__CC_SubsidyPaymentRouter$PaymentRequest"
+      },
+      "lightning:type" : "lightning__listType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

@@ -1,0 +1,19 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "payResList" : {
+      "title" : "List of Payment Responses",
+      "description" : "display all identified payment response at once.",
+      "maxItems" : 2000,
+      "items" : {
+        "lightning:type" : "@apexClassType/c__CC_SubsidyPaymentRouter$PaymentResponse"
+      },
+      "lightning:type" : "lightning__listType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true,
+      "copilotAction:useHydratedPrompt" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}
