@@ -1,6 +1,7 @@
 public with sharing class CC_SubsidyPaymentRouter {
     
     public static Date archiveThreshold = Date.today().addMonths(-12);
+    public static Boolean dataFound = false;
     
     public class InputWrapper{
         @InvocableVariable(label = 'List of Payment Requests' description='Pass all identified payment requests here at once.')
@@ -70,10 +71,12 @@ public with sharing class CC_SubsidyPaymentRouter {
                 String invKey = payReq.pid.toUpperCase() + String.valueOf(payReq.payPeriod);
                 PaymentResponse resp = new PaymentResponse();
                 if(invoiceMapDMO.containsKey(invKey)){
+                    dataFound = true;
                     Invoice_c_Home__dlm invDMO = invoiceMapDMO.get(invKey);
                     resp.paymentDetails = 'Provider Id: '+invDMO.Provider_Id_c__c+ ' Pay Period: '+invDMO.Pay_Period_c__c+' Invoice Amount: $'+invDMO.Invoice_Amount_c__c +' Source: Archival Record';
                     
                 }else if(invoiceMapLive.containsKey(invKey)){
+                    dataFound = true;
                     Invoice__c inv= invoiceMapLive.get(invKey);
                     resp.paymentDetails = 'Provider Id: '+inv.Provider_Id__c+ ' Pay Period: '+inv.Pay_Period__c+' Invoice Amount: $'+inv.Invoice_Amount__c+' Source: Live Record';
                     
@@ -84,28 +87,31 @@ public with sharing class CC_SubsidyPaymentRouter {
                 
                 results.add(resp);
             }
-            
-            try{
-                ConnectApi.EinsteinPromptTemplateGenerationsInput promptInput = new ConnectApi.EinsteinPromptTemplateGenerationsInput();
-                
-                ConnectApi.WrappedValue wrappedRawData = new ConnectApi.WrappedValue();
-                wrappedRawData.value = JSON.serialize(results);
-                
-                promptInput.inputParams = new Map<String, ConnectApi.WrappedValue>{ 'Input:Raw_Data' => wrappedRawData };
-                promptInput.additionalConfig = new ConnectApi.EinsteinLlmAdditionalConfigInput();
-                promptInput.additionalConfig.applicationName = 'PromptTemplateGenerationsInvocable';
-                promptInput.isPreview = false;
-                
-                ConnectApi.EinsteinPromptTemplateGenerationsRepresentation promptResponse = 
-                    ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate('Maryland_Subsidy_Summarizer', promptInput);
-                
-                if (promptResponse != null && promptResponse.generations != null) {
-                    outWrap.finalTableOutput = promptResponse.generations[0].text;
-                } else {
+            if(!dataFound){
+                outWrap.finalTableOutput = 'No data found: ' + JSON.serialize(results);
+            }else{
+                try{
+                    ConnectApi.EinsteinPromptTemplateGenerationsInput promptInput = new ConnectApi.EinsteinPromptTemplateGenerationsInput();
+                    
+                    ConnectApi.WrappedValue wrappedRawData = new ConnectApi.WrappedValue();
+                    wrappedRawData.value = JSON.serialize(results);
+                    
+                    promptInput.inputParams = new Map<String, ConnectApi.WrappedValue>{ 'Input:Raw_Data' => wrappedRawData };
+                        promptInput.additionalConfig = new ConnectApi.EinsteinLlmAdditionalConfigInput();
+                    promptInput.additionalConfig.applicationName = 'PromptTemplateGenerationsInvocable';
+                    promptInput.isPreview = false;
+                    
+                    ConnectApi.EinsteinPromptTemplateGenerationsRepresentation promptResponse = 
+                        ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate('Maryland_Subsidy_Summarizer', promptInput);
+                    
+                    if (promptResponse != null && promptResponse.generations != null) {
+                        outWrap.finalTableOutput = promptResponse.generations[0].text;
+                    } else {
+                        outWrap.finalTableOutput = 'The AI was unable to summarize the data. Raw facts: ' + JSON.serialize(results);
+                    }
+                }Catch(ConnectApi.ConnectApiException ex){
                     outWrap.finalTableOutput = 'The AI was unable to summarize the data. Raw facts: ' + JSON.serialize(results);
                 }
-            }Catch(ConnectApi.ConnectApiException ex){
-                outWrap.finalTableOutput = 'The AI was unable to summarize the data. Raw facts: ' + JSON.serialize(results);
             }
         }Catch(Exception ex){
             outWrap.finalTableOutput ='An Error Occured. Will Transfer To Human';
