@@ -3,6 +3,9 @@
 ## Project Overview
 This repository contains the source metadata and logic for an Autonomous AI Agent designed to modernize the Maryland State Child Care Agency’s provider inquiry system. The solution leverages Salesforce Agentforce and Data Cloud to provide a unified interface for current and historical subsidy payment data.
 
+<img width="1470" height="925" alt="image" src="https://github.com/user-attachments/assets/abab0c9c-b9f4-4b8e-a838-6ca25a39bb99" />
+
+
 ---
 
 ## Technical Architecture
@@ -12,6 +15,9 @@ The system implements a multi-tier data retrieval strategy to balance performanc
 * **Tier 2 (Salesforce Data Cloud):** Long-term archival access for historical records stored as Data Model Objects (DMOs), enabling a searchable audit trail for legacy payment data.
 * **Bulkified Execution:** The CC_SubsidyPaymentRouter is architected to handle record collections in a single transaction, ensuring the solution remains within Salesforce governor limits during high-volume inquiries.
 * **Deterministic Grounding:** Utilizes the Maryland_Subsidy_Summarizer (Prompt Template) to map raw data into a structured Markdown table, ensuring the LLM maintains 100% data integrity without hallucination.
+
+<img width="1470" height="927" alt="image" src="https://github.com/user-attachments/assets/bfc74618-bed6-46c7-9c66-38bd2919c3d7" />
+
 
 ---
 
