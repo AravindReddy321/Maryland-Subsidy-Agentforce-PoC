@@ -87,7 +87,7 @@ The Proof of Concept can be verified using the following parameters on the https
 ## Repository Structure
 * **Apex Logic:** `force-app/main/default/classes/`
 * **AI Metadata:** `force-app/main/default/genAiPlanners/`, `force-app/main/default/genAiPlannerBundles/`
-* **Portal Configuration:** `force-app/main/default/experienceBundles/`
+* **Portal Configuration:** `force-app/main/default/messagingChannels/`, `force-app/main/default/experienceBundles/`, `force-app/main/default/embeddedServiceConfig/`
 
 ---
 
