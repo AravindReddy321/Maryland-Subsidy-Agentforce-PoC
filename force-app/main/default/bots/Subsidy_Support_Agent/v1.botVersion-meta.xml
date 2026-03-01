@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BotVersion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>v1</fullName>
+    <articleAnswersGPTEnabled>false</articleAnswersGPTEnabled>
+    <botDialogs>
+        <botSteps>
+            <botMessages>
+                <message>Hi, I&apos;m an AI service assistant for Maryland Child Care Subsidy program. How can I help you?</message>
+                <messageIdentifier>05177694-ea8f-4789-a57c-30b463d67b3f</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>1f30a0c5-176f-48ac-a33e-65bc48d90b44</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <stepIdentifier>19f40bbb-ee62-4a5b-8dac-a463bf815b8e</stepIdentifier>
+            <type>Wait</type>
+        </botSteps>
+        <developerName>Welcome</developerName>
+        <isPlaceholderDialog>false</isPlaceholderDialog>
+        <label>Hi! I&apos;m your helpful bot.</label>
+        <showInFooterMenu>false</showInFooterMenu>
+    </botDialogs>
+    <botDialogs>
+        <botSteps>
+            <botMessages>
+                <message>Sorry, it looks like something has gone wrong.</message>
+                <messageIdentifier>5037b7e7-5aea-4108-ace4-0e333f65eaca</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>edd7fcea-36e5-4fb3-894c-6578910e449b</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <stepIdentifier>fc63b2f2-4f69-411e-8581-8f2de1dcd996</stepIdentifier>
+            <type>Wait</type>
+        </botSteps>
+        <developerName>Error_Handling</developerName>
+        <isPlaceholderDialog>false</isPlaceholderDialog>
+        <label>Unfortunately, a system error occurred. Let us start again.</label>
+        <showInFooterMenu>false</showInFooterMenu>
+    </botDialogs>
+    <botDialogs>
+        <botSteps>
+            <botMessages>
+                <message>One moment while I connect you to the next available service representative.</message>
+                <messageIdentifier>88f23ef9-2bfc-4541-8a25-4da0bd26722c</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>58210e49-7b19-456c-b83e-8a41f1bf702f</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <conversationSystemMessage>
+                <type>Transfer</type>
+            </conversationSystemMessage>
+            <stepIdentifier>ee0f69df-dffa-4293-ae5a-d9a86a8a3815</stepIdentifier>
+            <type>SystemMessage</type>
+        </botSteps>
+        <developerName>Transfer_To_Agent</developerName>
+        <isPlaceholderDialog>false</isPlaceholderDialog>
+        <label>Transfer To Agent</label>
+        <showInFooterMenu>false</showInFooterMenu>
+    </botDialogs>
+    <citationsEnabled>false</citationsEnabled>
+    <company>Maryland State Child Care Agency. We manage over $40M in monthly provider subsidies. We are migrating historical records (10+ years) to Data Cloud to manage storage limits while maintaining real-time transparency for our users.</company>
+    <conversationDefinitionPlanners>
+        <genAiPlannerName>Subsidy_Support_Agent</genAiPlannerName>
+    </conversationDefinitionPlanners>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>This variable may also be referred to as VerifiedCustomerId</description>
+        <developerName>VerifiedCustomerId</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>VerifiedCustomerId</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Stores the Salesforce Contact ID associated with the end user who sent the inbound email.</description>
+        <developerName>endUserContactId</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>endUserContactId</label>
+        <visibility>External</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Stores the customer ID type, whether it&apos;s a Salesforce user or a contact.</description>
+        <developerName>customerType</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>customerType</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>Stores a boolean value that indicates whether the customer code is verified.</description>
+        <developerName>isVerified</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>isVerified</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Stores the Salesforce user ID or contact ID.</description>
+        <developerName>customerId</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>customerId</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Stores the authentication key that&apos;s used to generate the verification code.</description>
+        <developerName>authenticationKey</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>authenticationKey</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Stores the Salesforce Case ID created by an inbound email.</description>
+        <developerName>emailCaseId</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>emailCaseId</label>
+        <visibility>External</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Stores email address of the end user who sent the inbound email.</description>
+        <developerName>endUserEmail</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>endUserEmail</label>
+        <visibility>External</visibility>
+    </conversationVariables>
+    <entryDialog>Welcome</entryDialog>
+    <intentDisambiguationEnabled>false</intentDisambiguationEnabled>
+    <intentV3Enabled>false</intentV3Enabled>
+    <knowledgeActionEnabled>false</knowledgeActionEnabled>
+    <knowledgeFallbackEnabled>false</knowledgeFallbackEnabled>
+    <role>Child Care Subsidy Specialist. Tasks: verify Provider IDs, query the Payment Router for dates, and explain adjustments. Use the Experience Cloud portal to provide technical, empathetic data explanations to providers.</role>
+    <smallTalkEnabled>false</smallTalkEnabled>
+    <staticPromptsEnabled>false</staticPromptsEnabled>
+    <stopRecPrompts>false</stopRecPrompts>
+    <stopWelcomePrompts>false</stopWelcomePrompts>
+    <surfacesEnabled>false</surfacesEnabled>
+    <toneType>Casual</toneType>
+</BotVersion>
