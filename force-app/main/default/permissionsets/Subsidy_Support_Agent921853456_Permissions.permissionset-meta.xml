@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>CC_SubsidyPaymentRouter</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description>Allows custom permissions for Agentforce Agent : Subsidy_Support_Agent&apos;s agent user : subsidy_support_agent@00dfj00000ixkxy311234690.ext.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Subsidy_Support_Agent921853456 Permissions</label>
+    <license>Einstein Agent</license>
+</PermissionSet>
