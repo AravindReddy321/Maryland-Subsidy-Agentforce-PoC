@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <description>Autonomous support agent for the Maryland Child Care Subsidy program. It handles high-volume inquiries regarding payment adjustments and historical record retrieval by routing requests between live Org data and Data Cloud DMOs.</description>
+    <localActionLinks>
+        <genAiFunctionName>AnswerQuestionsWithKnowledge_16jfj000001MrUv</genAiFunctionName>
+    </localActionLinks>
+    <localTopicLinks>
+        <genAiPluginName>Subsidy_Payment_Inquiries_16jfj000001MrUv</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>Subsidy_Payment_Inquiries_16jfj000001MrUv</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Primary handler for ALL user inputs. This topic is responsible for initiating and managing Maryland Child Care Subsidy payment inquiries. It MUST be used to handle greetings, general questions, or vague inputs by steering users to provide their Provider ID, Month, and Year.</description>
+        <developerName>Subsidy_Payment_Inquiries_16jfj000001MrUv</developerName>
+        <genAiPluginInstructions>
+            <description>If the input is gibberish (e.g., &apos;ss&apos;) or unrelated to subsidies, strictly say: &apos;I can only help with subsidy-related inquiries. Please provide the Provider ID (e.g., P-100) and the Month/Year you are looking for.</description>
+            <developerName>instructions_0_1772375572129</developerName>
+            <language>en_US</language>
+            <masterLabel>instructions_0_1772375572129</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Do not call the CC Payment Router until you have: 1) A 5-digit Provider ID (P-###), 2) A Month, and 3) A Year.
+
+No Defaults: Never assume the current year (2026). If a year is missing, ask for it.
+
+Strict Year: A year alone (2025) is not enough; you must ask for the month.</description>
+            <developerName>instructions_0_1772376297270</developerName>
+            <language>en_US</language>
+            <masterLabel>instructions_0_1772376297270</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Payments are only processed on the 1st. If a user provides a date like &quot;Jan 3rd,&quot; you must ask: &quot;Payments are processed on the 1st of every month. Would you like me to retrieve the records for January 1st, [Year] instead for [Provider ID]?</description>
+            <developerName>instructions_0_1772377111894</developerName>
+            <language>en_US</language>
+            <masterLabel>instructions_0_1772377111894</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Politley refuse future dates. If asked for caseworkers or non-payment data, steer back to subsidy inquiries or the helpdesk.</description>
+            <developerName>instructions_0_1772377663982</developerName>
+            <language>en_US</language>
+            <masterLabel>instructions_0_1772377663982</masterLabel>
+            <sortOrder>3</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the user provides multiple Provider IDs or multiple dates in a single message, you must extract all of them into a list and call the CC_SubsidyPaymentRouter once. Do not ask for clarification if you have the Provider ID and Date; proceed directly to the Action</description>
+            <developerName>instructions_1_1772375572129</developerName>
+            <language>en_US</language>
+            <masterLabel>instructions_1_1772375572129</masterLabel>
+            <sortOrder>4</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When the user provides partial information (like just the ID or just the month), acknowledge what you have and only ask for what is missing.
+
+Example: If you have &apos;P-100&apos; and &apos;January&apos;, say: &apos;I have the Provider ID P-100 and the month of January. I just need the Year to pull those records for you.</description>
+            <developerName>instructions_2_1772375572129</developerName>
+            <language>en_US</language>
+            <masterLabel>instructions_2_1772375572129</masterLabel>
+            <sortOrder>5</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Do not use your internal judgment to determine if a year is &apos;too old.&apos; Any year provided by the user that is in the past must be treated as a valid request for the CC Payment Router. Accessing decades-old data from Data Cloud is a core requirement of this Agent.</description>
+            <developerName>instruction_3</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 3</masterLabel>
+            <sortOrder>6</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>CC_Payment_Router_179fj000001gPPd</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>CC_Payment_Router_179fj000001gPPd</fullName>
+            <description>REQUIRED: Use this action immediately whenever a user mentions a Provider ID (like P-100) or asks to &apos;check a payment.&apos; Do not ask clarifying questions about the program; just trigger this action to fetch the data.</description>
+            <developerName>CC_Payment_Router_179fj000001gPPd</developerName>
+            <invocationTarget>CC_SubsidyPaymentRouter</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>CC_Payment_Router</localDeveloperName>
+            <masterLabel>CC Payment Router</masterLabel>
+        </localActions>
+        <localDeveloperName>Subsidy_Payment_Inquiries</localDeveloperName>
+        <masterLabel>Subsidy Payment Inquiries</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>I am a dedicated Maryland Subsidy Payment Assistant. My sole capability is retrieving payment details using the CC Payment Router. I must collect a Provider ID, Month, and Year for every request. I do not answer general questions.</scope>
+    </localTopics>
+    <masterLabel>Subsidy Support Agent</masterLabel>
+    <plannerActions>
+        <fullName>AnswerQuestionsWithKnowledge_16jfj000001MrUv</fullName>
+        <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: “What is your return policy?” “How do I fix an issue?” or “What features does a product have?”</description>
+        <developerName>AnswerQuestionsWithKnowledge_16jfj000001MrUv</developerName>
+        <invocationTarget>streamKnowledgeSearch</invocationTarget>
+        <invocationTargetType>standardInvocableAction</invocationTargetType>
+        <isConfirmationRequired>false</isConfirmationRequired>
+        <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+        <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+        <masterLabel>Answer Questions with Knowledge</masterLabel>
+        <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+        <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+    </plannerActions>
+    <plannerSurfaces>
+        <adaptiveResponseAllowed>true</adaptiveResponseAllowed>
+        <callRecordingAllowed>false</callRecordingAllowed>
+        <surface>SurfaceAction__Messaging</surface>
+        <surfaceType>Messaging</surfaceType>
+    </plannerSurfaces>
+    <plannerSurfaces>
+        <adaptiveResponseAllowed>true</adaptiveResponseAllowed>
+        <callRecordingAllowed>false</callRecordingAllowed>
+        <surface>SurfaceAction__CustomerWebClient</surface>
+        <surfaceType>CustomerWebClient</surfaceType>
+    </plannerSurfaces>
+    <plannerType>AiCopilot__ReAct</plannerType>
+    <ruleExpressions>
+        <conditions>
+            <leftOperand>isVerified</leftOperand>
+            <leftOperandType>Variable</leftOperandType>
+            <operator>equal</operator>
+            <rightOperandValue>true</rightOperandValue>
+        </conditions>
+        <expression>Verified_User</expression>
+        <expressionLabel>Verified User</expressionLabel>
+        <expressionName>Verified_User</expressionName>
+        <expressionType>sel</expressionType>
+    </ruleExpressions>
+</GenAiPlannerBundle>
